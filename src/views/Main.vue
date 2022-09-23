@@ -12,6 +12,9 @@
 
 			<!-- 选项侧边栏 -->
 			<Setting />
+
+			<!-- 一言 -->
+			<OneWord />
 		</div>
 	</div>
 </template>
@@ -22,13 +25,19 @@ import NavBar from "@/components/NavBar.vue";
 import DateTime from "@/components/DateTime.vue";
 import SearchBox from "@/components/SearchBox.vue";
 import Setting from "@/components/Setting.vue";
+import OneWord from "@/components/OneWord.vue";
 
 export default {
   components: {
 		NavBar,
 		DateTime,
 		SearchBox,
-		Setting
+		Setting,
+		OneWord
+  },
+
+  created() {
+	document.title = "拉布拉页"
   },
 };
 </script>

@@ -4,7 +4,7 @@
         <div class="app-searchbox-type">
             <img src="@/assets/icon/baidu.png">
         </div>
-        <input type="text" placeholder="输入内容并回车搜索" v-model="searchText" @keyup.13="handleSearch()">
+        <input type="text" v-model="searchText" @keyup.13="handleSearch()">
         <div class="app-searchbox-icon" @click="handleTranslate()">
             <img src="@/assets/icon/translate.png">
         </div>

@@ -5,19 +5,45 @@
         :visible.sync="$store.state.isShowSetting"
         direction="ltr"
         size="15%"
-        :append-to-body="true"
-        :before-close="handleCloseSetting"
-        >
+        :append-to-body="true">
         <div class="app-setting-container">
             <div class="app-setting-account">
                 <span style="margin-bottom: 5px;">帐号</span>
                 <div style="width: 230px; display: flex; flex-direction: column; align-items: center; background-color: rgba(0, 0, 0, 0.05); padding: 10px 10px;">
-                    <el-button type="primary" style="width: 200px; height: 30px; line-height: 0;">登录</el-button>
-                    <el-button style="width: 200px; height: 30px; line-height: 0; margin-left: 0; margin-top: 10px;">注册</el-button>
+                    <el-button type="primary" style="width: 200px; height: 30px; line-height: 0;" @click="handleOpenLogin">登录</el-button>
+                    <el-button style="width: 200px; height: 30px; line-height: 0; margin-left: 0; margin-top: 10px;" @click="handleOpenRegister">注册</el-button>
                 </div>
             </div>
+            <el-divider></el-divider>
         </div>
     </el-drawer>
+
+    <el-dialog 
+        title="登录帐号" 
+        :visible.sync="$store.state.isShowLogin"
+        :append-to-body="true"
+        width="450px">
+        <div class="app-setting-account-container">
+            <span style="font-size: 13px;">登录后可使用个性化备份等功能</span>
+            <el-input placeholder="请输入帐号" style="width: 300px; margin-top: 10px;" v-model="username"></el-input>
+            <el-input placeholder="请输入密码" style="width: 300px; margin-top: 10px;" v-model="password" show-password></el-input>
+            <el-button type="primary" style="width: 300px; margin-top: 10px;">登录</el-button>
+        </div>
+    </el-dialog>
+
+    <el-dialog
+        title="注册账号"
+        :visible.sync="$store.state.isShowRegister"
+        :append-to-body="true"
+        width="450px">
+        <div class="app-setting-account-container">
+            <span style="font-size: 13px;">注册后可使用个性化备份等功能</span>
+            <el-input placeholder="请输入帐号" style="width: 300px; margin-top: 10px;" v-model="username"></el-input>
+            <el-input placeholder="请输入密码" style="width: 300px; margin-top: 10px;" v-model="password" show-password></el-input>
+            <el-input placeholder="请确认密码" style="width: 300px; margin-top: 10px;" v-model="cpassword" show-password></el-input>
+            <el-button type="primary" style="width: 300px; margin-top: 10px;">注册</el-button>
+        </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -25,13 +51,19 @@
 export default {
     data() {
         return {
-            
+            username: "",
+            password: "",
+            cpassword: ""
         }
     },
 
     methods: {
-        handleCloseSetting(){
-            this.$store.state.isShowSetting = false;
+        handleOpenLogin(){
+            this.$store.state.isShowLogin = true;
+        },
+
+        handleOpenRegister(){
+            this.$store.state.isShowRegister = true;
         },
 
         handleLogin(){
@@ -39,7 +71,7 @@ export default {
         },
 
         handleRegister(){
-            
+
         }
     },
 }
@@ -60,5 +92,11 @@ export default {
     display: flex;
     flex-direction: column;
     padding: 10px 0;
+}
+
+.app-setting-account-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 </style>
