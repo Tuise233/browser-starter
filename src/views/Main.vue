@@ -9,6 +9,9 @@
 
 			<!-- 搜索栏 -->
 			<SearchBox />
+
+			<!-- 选项侧边栏 -->
+			<Setting />
 		</div>
 	</div>
 </template>
@@ -18,12 +21,14 @@
 import NavBar from "@/components/NavBar.vue";
 import DateTime from "@/components/DateTime.vue";
 import SearchBox from "@/components/SearchBox.vue";
+import Setting from "@/components/Setting.vue";
 
 export default {
   components: {
 		NavBar,
 		DateTime,
-		SearchBox
+		SearchBox,
+		Setting
   },
 };
 </script>

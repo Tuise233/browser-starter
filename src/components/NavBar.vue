@@ -5,7 +5,7 @@
     </span>
 
     <div class="app-navbar-options">
-        <i class="el-icon-setting app-navbar-options-setting"></i>
+        <i class="el-icon-setting app-navbar-options-setting" v-on:click="handleOpenSetting"></i>
     </div>
   </div>
 </template>
@@ -28,6 +28,12 @@ export default {
             this.weather.temp = res.data.lives[0].temperature;
             this.weather.state = res.data.lives[0].weather;
         });
+    },
+
+    methods: {
+        handleOpenSetting(){
+            this.$store.state.isShowSetting = true;
+        }
     },
 }
 </script>
