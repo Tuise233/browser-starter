@@ -1,19 +1,17 @@
-# client
+# 新拉布拉页
 
-## Project setup
+## 项目依赖安装
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
+### 开发环境运行项目
 ```
+cd client
 npm run serve
 ```
 
-### Compiles and minifies for production
+### 编译发布项目
 ```
 npm run build
 ```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
