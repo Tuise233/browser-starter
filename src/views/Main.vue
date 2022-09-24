@@ -1,6 +1,6 @@
 <template>
-  <div class="app-background">
-		<div class="app-container">
+  <div class="app-background" :style="{ backgroundImage: `url('${backgroundUrl}')` }">
+		<div class="app-container" :style="{ backdropFilter: `blur(${$store.state.backBlur}px)` }">
 			<!-- 导航栏 -->
 			<NavBar />
 
@@ -38,6 +38,22 @@ export default {
 
   created() {
 	document.title = "拉布拉页"
+	this.backgroundUrl = this.backgrounds[Math.floor(Math.random() * this.backgrounds.length)];
+  },
+
+  data() {
+	return {
+		backgrounds:[
+			"https://images.pexels.com/photos/9921401/pexels-photo-9921401.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+            "https://images.pexels.com/photos/9941707/pexels-photo-9941707.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260",
+            "https://images.pexels.com/photos/9921341/pexels-photo-9921341.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+            "https://images.pexels.com/photos/11739438/pexels-photo-11739438.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+            "https://images.pexels.com/photos/9921356/pexels-photo-9921356.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+            "https://images.pexels.com/photos/1252869/pexels-photo-1252869.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
+		],
+
+		backgroundUrl: ""
+	}
   },
 };
 </script>
@@ -61,7 +77,6 @@ html, body{
 .app-background {
 	width: 100vw;
 	height: 100vh;
-	background-image: url("https://tvax1.sinaimg.cn/large/bfe05ea9ly1fxgv3f6vjyj21hc0u07df.jpg");
 	background-size: cover;
 	background-position: center;
 	background-repeat: no-repeat;
@@ -70,7 +85,7 @@ html, body{
 .app-container{
 	width: 100vw;
 	height: 100vh;
-  backdrop-filter: blur(10px);
+  	/* backdrop-filter: blur(10px); */
 	display: flex;
 	flex-direction: column;
 	align-items: center;

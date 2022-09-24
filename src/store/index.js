@@ -8,5 +8,7 @@ export default new VueX.Store({
         isShowSetting: false, //是否展示选项侧边栏
         isShowLogin: false, //是否显示登录账号界面
         isShowRegister: false, //是否显示注册账号界面
+
+        backBlur: 10,
     }
 });

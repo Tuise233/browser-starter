@@ -4,7 +4,7 @@
         title="设置"
         :visible.sync="$store.state.isShowSetting"
         direction="ltr"
-        size="15%"
+        :size="270"
         :append-to-body="true">
         <div class="app-setting-container">
             <div class="app-setting-account">
@@ -13,6 +13,11 @@
                     <el-button type="primary" style="width: 200px; height: 30px; line-height: 0;" @click="handleOpenLogin">登录</el-button>
                     <el-button style="width: 200px; height: 30px; line-height: 0; margin-left: 0; margin-top: 10px;" @click="handleOpenRegister">注册</el-button>
                 </div>
+            </div>
+            <el-divider></el-divider>
+            <div class="app-setting-blur">
+                <span style="margin-bottom: 5px;">背景毛玻璃效果</span>
+                <el-slider v-model="blurValue" style="width: 250px;" :min="0" :max="50" @input="handleBlurChange"></el-slider>
             </div>
             <el-divider></el-divider>
         </div>
@@ -49,11 +54,17 @@
 
 <script>
 export default {
+    created() {
+        this.blurValue = this.$store.state.backBlur;
+    },
+
     data() {
         return {
             username: "",
             password: "",
-            cpassword: ""
+            cpassword: "",
+
+            blurValue: 0
         }
     },
 
@@ -72,6 +83,10 @@ export default {
 
         handleRegister(){
 
+        },
+
+        handleBlurChange(){
+            this.$store.state.backBlur = this.blurValue;
         }
     },
 }
