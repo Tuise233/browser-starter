@@ -11,7 +11,12 @@ export default new VueX.Store({
         isShowRegister: false, //是否显示注册账号界面
 
         userData: {
+            isLogin: false, //是否登录帐号
             backBlur: 10, //背景毛玻璃效果
+        },
+
+        userInfo: {
+            username: ""
         }
     },
 
@@ -25,6 +30,10 @@ export default new VueX.Store({
             if(userData != null){
                 this.state.userData = JSON.parse(userData);
             }
+        },
+
+        setUserInfo(self, username){
+            this.state.userInfo.username = username;
         }
     }
 });

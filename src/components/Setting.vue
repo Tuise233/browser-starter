@@ -10,8 +10,14 @@
             <div class="app-setting-account">
                 <span>帐号</span>
                 <div style="margin-top: 5px; width: 230px; display: flex; flex-direction: column; align-items: center; background-color: rgba(0, 0, 0, 0.05); padding: 10px 10px; border: 5px;">
-                    <el-button type="primary" style="width: 200px; height: 30px; line-height: 0;" @click="handleOpenLogin">登录</el-button>
-                    <el-button style="width: 200px; height: 30px; line-height: 0; margin-left: 0; margin-top: 10px;" @click="handleOpenRegister">注册</el-button>
+                    <div style="width: 200px;" v-if="$store.state.userData.isLogin == false">
+                        <el-button type="primary" style="width: 200px; height: 30px; line-height: 0;" @click="handleOpenLogin">登录</el-button>
+                        <el-button style="width: 200px; height: 30px; line-height: 0; margin-left: 0; margin-top: 10px;" @click="handleOpenRegister">注册</el-button>
+                    </div>
+
+                    <div style="width: 200px;" v-if="$store.state.userData.isLogin == true">
+                        <el-button type="primary" style="width: 200px; height: 30px; line-height: 0;" @click="handleLogout">退出登录</el-button>
+                    </div>
                 </div>
             </div>
             <el-divider></el-divider>
@@ -35,7 +41,7 @@
             <span style="font-size: 13px;">登录后可使用个性化备份等功能</span>
             <el-input placeholder="请输入帐号" style="width: 300px; margin-top: 10px;" v-model="username"></el-input>
             <el-input placeholder="请输入密码" style="width: 300px; margin-top: 10px;" v-model="password" show-password></el-input>
-            <el-button type="primary" style="width: 300px; margin-top: 10px;">登录</el-button>
+            <el-button type="primary" style="width: 300px; margin-top: 10px;" @click="handleLogin">登录</el-button>
         </div>
     </el-dialog>
 
@@ -47,16 +53,18 @@
         <div class="app-setting-account-container">
             <span style="font-size: 13px;">注册后可使用个性化备份等功能</span>
             <el-input placeholder="请输入帐号" style="width: 300px; margin-top: 10px;" v-model="username"></el-input>
+            <el-input placeholder="请输入邮箱" style="width: 300px; margin-top: 10px;" v-model="email"></el-input>
             <el-input placeholder="请输入密码" style="width: 300px; margin-top: 10px;" v-model="password" show-password></el-input>
             <el-input placeholder="请确认密码" style="width: 300px; margin-top: 10px;" v-model="cpassword" show-password></el-input>
-            <el-button type="primary" style="width: 300px; margin-top: 10px;">注册</el-button>
+            <el-button type="primary" style="width: 300px; margin-top: 10px;" @click="handleRegister">注册</el-button>
         </div>
     </el-dialog>
   </div>
 </template>
 
 <script>
-import local from "@/utils/local";
+import axios from "axios";
+
 export default {
     created() {
         this.blurValue = this.$store.state.userData.backBlur;
@@ -67,6 +75,7 @@ export default {
             username: "",
             password: "",
             cpassword: "",
+            email: "",
 
             blurValue: 0
         }
@@ -82,11 +91,76 @@ export default {
         },
 
         handleLogin(){
+            if(this.username == "" || this.password == ""){
+                return this.$message.error({
+                    message: "请输入登录应填入的字段"
+                });
+            }
 
+            axios.post("http://localhost:8081/user/login", {
+                username: this.username,
+                password: this.password
+            }).then((res) => {
+
+                if(res.data.type == "fail"){
+                    return this.$message.error({
+                        message: res.data.message
+                    });
+                } else if(res.data.type == "success"){
+                    this.$store.state.userData.isLogin = true;
+                    this.$store.state.isShowLogin = false;
+                    this.$store.commit("saveUserData");
+                    this.$store.commit("setUserInfo", res.data.entity.username);
+                    this.$message({
+                        message: res.data.message,
+                        type: "success"
+                    });
+                }
+            });
+        },
+
+        handleLogout(){
+            this.$store.state.userData.isLogin = false;
+            this.$store.commit("saveUserData");
+            this.$message({
+                message: "退出成功",
+                type: "success"
+            });
         },
 
         handleRegister(){
+            if(this.username == "" || this.password == "" || this.cpassword == "" || this.email == ""){
+                return this.$message.error({
+                    message: "请输入注册应填入的字段"
+                });
+            }
 
+            if(this.password != this.cpassword){
+                return this.$message.error({
+                    message: "两次输入的密码不一致",
+                });
+            }
+
+            axios.post("http://localhost:8081/user/register", {
+                username: this.username,
+                password: this.password,
+                email: this.email
+            }).then((res) => {
+                if(res.data.type == "fail"){
+                    return this.$message.error({
+                        message: res.data.message
+                    });
+                } else if(res.data.type == "success"){
+                    this.$store.state.userData.isLogin = true;
+                    this.$store.state.isShowRegister = false;
+                    this.$store.commit("saveUserData");
+                    this.$store.commit("setUserInfo", res.data.entity.username);
+                    return this.$message({
+                        message: res.data.message,
+                        type: "success"
+                    });
+                }
+            });
         },
 
         handleBlurChange(){
