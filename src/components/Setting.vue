@@ -8,16 +8,19 @@
         :append-to-body="true">
         <div class="app-setting-container">
             <div class="app-setting-account">
-                <span style="margin-bottom: 5px;">帐号</span>
-                <div style="width: 230px; display: flex; flex-direction: column; align-items: center; background-color: rgba(0, 0, 0, 0.05); padding: 10px 10px;">
+                <span>帐号</span>
+                <div style="margin-top: 5px; width: 230px; display: flex; flex-direction: column; align-items: center; background-color: rgba(0, 0, 0, 0.05); padding: 10px 10px; border: 5px;">
                     <el-button type="primary" style="width: 200px; height: 30px; line-height: 0;" @click="handleOpenLogin">登录</el-button>
                     <el-button style="width: 200px; height: 30px; line-height: 0; margin-left: 0; margin-top: 10px;" @click="handleOpenRegister">注册</el-button>
                 </div>
             </div>
             <el-divider></el-divider>
             <div class="app-setting-blur">
-                <span style="margin-bottom: 5px;">背景毛玻璃效果</span>
-                <el-slider v-model="blurValue" style="width: 250px;" :min="0" :max="50" @input="handleBlurChange"></el-slider>
+                <span>外观</span>
+                <div style="margin-top: 5px; width: 230px; display: flex; flex-direction: column; align-items: center; background-color: rgba(0, 0, 0, 0.05); padding: 10px 10px; border: 5px;">
+                    <span style="margin-left: 0; margin-right: auto;">壁纸毛玻璃效果</span>
+                    <el-slider v-model="blurValue" style="width: 230px;" :min="0" :max="50" @input="handleBlurChange"></el-slider>
+                </div>
             </div>
             <el-divider></el-divider>
         </div>
@@ -55,7 +58,7 @@
 <script>
 export default {
     created() {
-        this.blurValue = this.$store.state.backBlur;
+        this.blurValue = this.$store.state.userData.backBlur;
     },
 
     data() {
@@ -86,7 +89,7 @@ export default {
         },
 
         handleBlurChange(){
-            this.$store.state.backBlur = this.blurValue;
+            this.$store.state.userData.backBlur = this.blurValue;
         }
     },
 }

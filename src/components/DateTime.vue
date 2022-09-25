@@ -49,7 +49,7 @@ export default {
         4: "四",
         5: "五",
         6: "六",
-        7: "日",
+        0: "日",
       };
         let date = new Date();
         let month = date.getMonth() + 1 < 10 ? `0${date.getMonth() + 1}` : date.getMonth() + 1;

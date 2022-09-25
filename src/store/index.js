@@ -9,6 +9,8 @@ export default new VueX.Store({
         isShowLogin: false, //是否显示登录账号界面
         isShowRegister: false, //是否显示注册账号界面
 
-        backBlur: 10,
+        userData: {
+            backBlur: 10, //背景毛玻璃效果
+        }
     }
 });

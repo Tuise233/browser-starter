@@ -77,7 +77,7 @@ export default {
 .app-searchbox:hover{
     width: 500px;
     height: 50px;
-    background-color: rgba(255, 255, 255, 0.6);
+    background-color: rgba(255, 255, 255, 1);
 }
 
 .app-searchbox-type{
