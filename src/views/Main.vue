@@ -20,6 +20,8 @@
 </template>
 
 <script>
+import local from "@/utils/local";
+
 //Components
 import NavBar from "@/components/NavBar.vue";
 import DateTime from "@/components/DateTime.vue";

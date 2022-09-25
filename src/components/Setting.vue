@@ -19,7 +19,7 @@
                 <span>外观</span>
                 <div style="margin-top: 5px; width: 230px; display: flex; flex-direction: column; align-items: center; background-color: rgba(0, 0, 0, 0.05); padding: 10px 10px; border: 5px;">
                     <span style="margin-left: 0; margin-right: auto;">壁纸毛玻璃效果</span>
-                    <el-slider v-model="blurValue" style="width: 230px;" :min="0" :max="50" @input="handleBlurChange"></el-slider>
+                    <el-slider v-model="blurValue" style="width: 230px;" :min="0" :max="50" @input="handleBlurChange" @change="handleBlurSave"></el-slider>
                 </div>
             </div>
             <el-divider></el-divider>
@@ -56,6 +56,7 @@
 </template>
 
 <script>
+import local from "@/utils/local";
 export default {
     created() {
         this.blurValue = this.$store.state.userData.backBlur;
@@ -90,6 +91,10 @@ export default {
 
         handleBlurChange(){
             this.$store.state.userData.backBlur = this.blurValue;
+        },
+
+        handleBlurSave(){
+            this.$store.commit("saveUserData");
         }
     },
 }

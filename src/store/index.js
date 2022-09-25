@@ -1,5 +1,6 @@
 import Vue from "vue";
 import VueX from "vuex";
+import local from "@/utils/local";
 
 Vue.use(VueX);
 
@@ -11,6 +12,19 @@ export default new VueX.Store({
 
         userData: {
             backBlur: 10, //背景毛玻璃效果
+        }
+    },
+
+    mutations: {
+        saveUserData(){
+            local.setLocal("userData", JSON.stringify(this.state.userData));
+        },
+
+        getUserData(){
+            let userData = local.getLocal("userData");
+            if(userData != null){
+                this.state.userData = JSON.parse(userData);
+            }
         }
     }
 });
