@@ -2,7 +2,7 @@
   <div class="app-searchbox-container">
     <div class="app-searchbox" @mouseenter="handleMouseEnter" @mouseleave="handleMouseLeave">
         <div class="app-searchbox-type">
-            <img src="@/assets/icon/baidu.png">
+            <img src="@/assets/icon.png">
         </div>
         <input type="text" v-model="searchText" @keyup.13="handleSearch()">
         <div class="app-searchbox-icon" @click="handleTranslate()">
@@ -39,8 +39,52 @@ export default {
         },
 
         handleSearch(){
+            /*
             let url = "http://www.baidu.com/s?wd=" + this.searchText;
             window.open(url, "_self");
+            */
+           //解析搜索
+           let url = "";
+           let splitResult = this.searchText.split(" ");
+           if(splitResult.length >= 2){
+                let searchText = "";
+                for(let i = 1; i < splitResult.length; i++){
+                    searchText += splitResult[i];
+                    if(i != splitResult.length - 1){
+                        searchText += " ";
+                    }
+                }
+                switch(splitResult[0]){
+                    case "github":{
+                        url = "https://github.com/search?q=test" + searchText;
+                        break;
+                    }
+
+                    case "google":{
+                        url = `https://www.google.com.hk/search?q=${searchText}&hl=zh-CN`;
+                        break;
+                    }
+
+                    case "bilibili":{
+                        url = `https://search.bilibili.com/all?keyword=${searchText}`;
+                        break;
+                    }
+
+                    case "fanyi":{
+                        url = "https://translate.google.cn/#view=home&op=translate&sl=en&tl=zh-CN&text=" + this.searchText;
+                        break;
+                    }
+
+                    default:{
+                        url = "http://www.baidu.com/s?wd=" + this.searchText;
+                        break;
+                    }
+                }
+           } else {
+                url = "http://www.baidu.com/s?wd=" + this.searchText;
+           }
+
+           window.open(url, "_self");
         },
 
         handleTranslate(){
@@ -93,8 +137,8 @@ export default {
 }
 
 .app-searchbox img{
-    width: 20px;
-    height: 20px;
+    width: 35px;
+    height: 35px;
 }
 
 .app-searchbox input{
