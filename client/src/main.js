@@ -15,5 +15,6 @@ new Vue({
   render: h => h(App),
   created(){
     this.$store.commit("getUserData");
+    this.$store.commit("getUserInfo");
   }
 }).$mount('#app')

@@ -16,7 +16,9 @@
                     </div>
 
                     <div style="width: 200px;" v-if="$store.state.userData.isLogin == true">
-                        <el-button type="primary" style="width: 200px; height: 30px; line-height: 0;" @click="handleLogout">退出登录</el-button>
+                        <el-button type="primary" style="width: 200px; height: 30px; line-height: 0;" @click="handleSaveUserData">保存数据</el-button>
+                        <el-button type="primary" style="width: 200px; height: 30px; line-height: 0; margin-left: 0; margin-top: 10px;" @click="handleSyncUserData">同步数据</el-button>
+                        <el-button type="danger" style="width: 200px; height: 30px; line-height: 0; margin-left: 0; margin-top: 10px;" @click="handleLogout">退出登录</el-button>
                     </div>
                 </div>
             </div>
@@ -26,6 +28,13 @@
                 <div style="margin-top: 5px; width: 230px; display: flex; flex-direction: column; align-items: center; background-color: rgba(0, 0, 0, 0.05); padding: 10px 10px; border: 5px;">
                     <span style="margin-left: 0; margin-right: auto;">壁纸毛玻璃效果</span>
                     <el-slider v-model="blurValue" style="width: 230px;" :min="0" :max="50" @input="handleBlurChange" @change="handleBlurSave"></el-slider>
+                </div>
+            </div>
+            <el-divider></el-divider>
+            <div class="app-setting-system">
+                <span>系统</span>
+                <div style="margin-top: 5px; width: 230px; display: flex; flex-direction: column; align-items: center; background-color: rgba(0, 0, 0, 0.05); padding: 10px 10px; border: 50px;">
+                    <el-button type="danger" style="width: 200px; height: 30px; line-height: 0;" @click="handleClearCache">清空缓存</el-button>
                 </div>
             </div>
             <el-divider></el-divider>
@@ -109,8 +118,9 @@ export default {
                 } else if(res.data.type == "success"){
                     this.$store.state.userData.isLogin = true;
                     this.$store.state.isShowLogin = false;
+                    this.$store.state.userInfo.username = res.data.entity.username;
                     this.$store.commit("saveUserData");
-                    this.$store.commit("setUserInfo", res.data.entity.username);
+                    this.$store.commit("saveUserInfo");
                     this.$message({
                         message: res.data.message,
                         type: "success"
@@ -121,7 +131,9 @@ export default {
 
         handleLogout(){
             this.$store.state.userData.isLogin = false;
+            this.$store.state.userInfo.username = "";
             this.$store.commit("saveUserData");
+            this.$store.commit("saveUserInfo");
             this.$message({
                 message: "退出成功",
                 type: "success"
@@ -155,6 +167,7 @@ export default {
                     this.$store.state.isShowRegister = false;
                     this.$store.commit("saveUserData");
                     this.$store.commit("setUserInfo", res.data.entity.username);
+                    this.$store.commit("saveUserInfo");
                     return this.$message({
                         message: res.data.message,
                         type: "success"
@@ -169,6 +182,56 @@ export default {
 
         handleBlurSave(){
             this.$store.commit("saveUserData");
+        },
+
+        handleSaveUserData(){
+            if(this.$store.state.userData.isLogin == false){
+                return this.$message.error({
+                    message: "未登录账号，无法保存数据"
+                });
+            }
+
+            axios.post("http://localhost:8081/user/saveUserData", {
+                username: this.$store.state.userInfo.username,
+                data: JSON.stringify(this.$store.state.userData)
+            }).then((res) => {
+                if(res.data.type == "fail"){
+                    return this.$message.error({
+                        message: res.data.message
+                    });
+                }
+                this.$message({
+                    type: res.data.type,
+                    message: res.data.message
+                });
+            });
+        },
+
+        handleSyncUserData(){
+            if(this.$store.state.userData.isLogin == false){
+                return this.$message.error({
+                    message: "未登录账号，无法同步数据"
+                });
+            }
+
+            axios.get(`http://localhost:8081/user/getUserData/${this.$store.state.userInfo.username}`).then((res) => {
+                this.$message({
+                    type: res.data.type,
+                    message: res.data.message
+                });
+
+                this.$store.state.userData = JSON.parse(res.data.entity.userData);
+                this.$store.commit("saveUserData");
+            });
+        },
+
+        handleClearCache(){
+            this.$store.commit("clearUserData");
+            this.$store.commit("clearUserInfo");
+            this.$message({
+                type: "success",
+                message: "清空缓存成功"
+            });
         }
     },
 }
@@ -185,7 +248,7 @@ export default {
 
 .app-setting-account{
     width: 250px;
-    height: 110px;
+    height: auto;
     display: flex;
     flex-direction: column;
     padding: 10px 0;

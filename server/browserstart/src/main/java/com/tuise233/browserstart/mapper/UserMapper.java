@@ -4,6 +4,7 @@ import com.tuise233.browserstart.entity.User;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 
@@ -17,4 +18,7 @@ public interface UserMapper {
 
     @Select("SELECT * FROM users WHERE email = #{email}")
     List<User> findUserByEmail(User user);
+
+    @Update("UPDATE users SET userData = #{userData} WHERE username = #{username}")
+    Integer updateUserData(User user);
 }

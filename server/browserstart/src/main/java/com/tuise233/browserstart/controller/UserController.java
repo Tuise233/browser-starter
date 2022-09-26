@@ -1,11 +1,11 @@
 package com.tuise233.browserstart.controller;
 
+import com.tuise233.browserstart.entity.UserData;
 import com.tuise233.browserstart.entity.UserResponse;
 import com.tuise233.browserstart.entity.User;
 import com.tuise233.browserstart.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -60,5 +60,40 @@ public class UserController {
             }
         }
         return new UserResponse("fail", "登录失败，未找到该用户");
+    }
+
+    @PostMapping("/saveUserData")
+    private UserResponse saveUserData(@RequestBody UserData userData){
+        User user = new User(userData.getUsername());
+        List<User> users = userMapper.findUserByUsername(user);
+
+        for(User u:users){
+            if(user.getUsername().equals(u.getUsername())){
+                u.setUserData(userData.getData());
+                Integer result = userMapper.updateUserData(u);
+                if(result <= 0){
+                    return new UserResponse("fail", "保存失败，保存时出现未知错误");
+                } else {
+                    return new UserResponse("success", "用户数据保存成功");
+                }
+            }
+        }
+
+        return new UserResponse("fail", "保存失败，未找到该用户");
+    }
+
+    @GetMapping("/getUserData/{username}")
+    private UserResponse getUserData(@PathVariable String username){
+        User user = new User(username);
+
+        List<User> users = userMapper.findUserByUsername(user);
+        for(User u:users){
+            if(user.getUsername().equals(u.getUsername())){
+                u.setPassword("");
+                return new UserResponse("success", "用户数据同步成功", u);
+            }
+        }
+
+        return new UserResponse("fail", "获取失败，未找到该用户");
     }
 }
