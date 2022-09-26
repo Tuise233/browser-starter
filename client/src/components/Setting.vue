@@ -106,7 +106,7 @@ export default {
                 });
             }
 
-            axios.post("http://localhost:8081/user/login", {
+            axios.post("http://web.tuise233.cn:8081/user/login", {
                 username: this.username,
                 password: this.password
             }).then((res) => {
@@ -153,7 +153,7 @@ export default {
                 });
             }
 
-            axios.post("http://localhost:8081/user/register", {
+            axios.post("http://web.tuise233.cn:8081/user/register", {
                 username: this.username,
                 password: this.password,
                 email: this.email
@@ -191,7 +191,7 @@ export default {
                 });
             }
 
-            axios.post("http://localhost:8081/user/saveUserData", {
+            axios.post("http://web.tuise233.cn:8081/user/saveUserData", {
                 username: this.$store.state.userInfo.username,
                 data: JSON.stringify(this.$store.state.userData)
             }).then((res) => {
@@ -214,7 +214,7 @@ export default {
                 });
             }
 
-            axios.get(`http://localhost:8081/user/getUserData/${this.$store.state.userInfo.username}`).then((res) => {
+            axios.get(`http://web.tuise233.cn:8081/user/getUserData/${this.$store.state.userInfo.username}`).then((res) => {
                 this.$message({
                     type: res.data.type,
                     message: res.data.message
