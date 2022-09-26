@@ -2,12 +2,10 @@
   <div class="app-searchbox-container">
     <div class="app-searchbox" @mouseenter="handleMouseEnter" @mouseleave="handleMouseLeave">
         <div class="app-searchbox-type">
-            <img src="@/assets/icon.png">
+            <!-- <img src="@/assets/icon.png"> -->
+            <img :src="iconPath">
         </div>
-        <input type="text" v-model="searchText" @keyup.13="handleSearch()">
-        <div class="app-searchbox-icon" @click="handleTranslate()">
-            <img src="@/assets/icon/translate.png">
-        </div>
+        <input type="text" v-model="searchText" @keyup.13="handleSearch()" @input="handleInputChanged">
     </div>
   </div>
 </template>
@@ -19,7 +17,8 @@ export default {
 
     data() {
         return {
-            searchText: ""
+            searchText: "",
+            iconPath: require('../assets/icon/baidu.png')
         }
     },
 
@@ -90,6 +89,27 @@ export default {
         handleTranslate(){
             let url = "https://translate.google.cn/#view=home&op=translate&sl=en&tl=zh-CN&text=" + this.searchText;
             window.open(url, "_self");
+        },
+
+        handleInputChanged(){
+            if(this.searchText.length == 6){
+                if(this.searchText == "fanyi "){
+                    this.iconPath = require("../assets/icon/translate.png");
+                }
+            } else if(this.searchText.length == 7){
+                if(this.searchText == "github "){
+                    this.iconPath = require("../assets/icon/github.png");
+                } else if(this.searchText == "google "){
+                    this.iconPath = require("../assets/icon/google.png");
+                }
+            } else if(this.searchText.length == 9){
+                if(this.searchText == "bilibili "){
+                    this.iconPath = require("../assets/icon/bilibili.png");
+                }
+            } else if(this.searchText.length < 6){
+                this.iconPath = require("../assets/icon/baidu.png");
+            }
+            console.log(this.searchText);
         }
     },
 }
@@ -137,13 +157,13 @@ export default {
 }
 
 .app-searchbox img{
-    width: 35px;
-    height: 35px;
+    width: 20px;
+    height: 20px;
 }
 
 .app-searchbox input{
     height: 50px;
-    width: 380px;
+    width: 430px;
     margin-left: 0;
     margin-right: auto;
     border: none;
@@ -152,28 +172,5 @@ export default {
     background-color: transparent;
     padding: 0 10px;
     transition: 0.3s all;
-}
-
-.app-searchbox-icon{
-    opacity: 0;
-    height: 50px;
-    width: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    transition: 0.3s all;
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
-}
-
-.app-searchbox-icon img{
-    width: 25px;
-    height: 25px;
-}
-
-.app-searchbox-icon:hover{
-    cursor: pointer;
-    background-color: rgba(255, 255, 255, 0.3);
 }
 </style>
