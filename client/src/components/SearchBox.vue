@@ -2,7 +2,6 @@
   <div class="app-searchbox-container">
     <div class="app-searchbox" @mouseenter="handleMouseEnter" @mouseleave="handleMouseLeave">
         <div class="app-searchbox-type">
-            <!-- <img src="@/assets/icon.png"> -->
             <img :src="iconPath">
         </div>
         <input type="text" v-model="searchText" @keyup.13="handleSearch()" @input="handleInputChanged">
@@ -25,23 +24,15 @@ export default {
     methods: {
         handleMouseEnter(){
             let type = dom.getEntity("app-searchbox-type", 0);
-            let icon = dom.getEntity("app-searchbox-icon", 0);
             type.style.opacity = "1";
-            icon.style.opacity = "1";
         },
 
         handleMouseLeave(){
             let type = dom.getEntity("app-searchbox-type", 0);
-            let icon = dom.getEntity("app-searchbox-icon", 0);
             type.style.opacity = "0";
-            icon.style.opacity = "0";
         },
 
         handleSearch(){
-            /*
-            let url = "http://www.baidu.com/s?wd=" + this.searchText;
-            window.open(url, "_self");
-            */
            //解析搜索
            let url = "";
            let splitResult = this.searchText.split(" ");
