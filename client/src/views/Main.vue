@@ -14,6 +14,9 @@
 			<!-- 选项侧边栏 -->
 			<Setting />
 
+			<!-- 应用列表 -->
+			<AppList />
+
 			<!-- 一言 -->
 			<OneWord />
 		</div>
@@ -21,13 +24,12 @@
 </template>
 
 <script>
-import local from "@/utils/local";
-
 //Components
 import NavBar from "@/components/NavBar.vue";
 import DateTime from "@/components/DateTime.vue";
 import SearchBox from "@/components/SearchBox.vue";
 import Setting from "@/components/Setting.vue";
+import AppList from "@/components/AppList.vue";
 import OneWord from "@/components/OneWord.vue";
 
 export default {
@@ -36,6 +38,7 @@ export default {
 		DateTime,
 		SearchBox,
 		Setting,
+		AppList,
 		OneWord
   },
 

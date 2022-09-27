@@ -46,7 +46,7 @@ export default {
                 }
                 switch(splitResult[0]){
                     case "github":{
-                        url = "https://github.com/search?q=test" + searchText;
+                        url = "https://github.com/search?q=" + searchText;
                         break;
                     }
 
@@ -100,7 +100,6 @@ export default {
             } else if(this.searchText.length < 6){
                 this.iconPath = require("../assets/icon/baidu.png");
             }
-            console.log(this.searchText);
         }
     },
 }
@@ -170,7 +169,7 @@ export default {
 @media screen and (min-width: 1000px){
     .app-searchbox-container{
         width: 600px;
-        height: 120px;
+        height: 100px;
         display: flex;
         flex-direction: column;
         align-items: center;

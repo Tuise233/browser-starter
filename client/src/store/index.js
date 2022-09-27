@@ -1,12 +1,14 @@
 import Vue from "vue";
 import VueX from "vuex";
 import local from "@/utils/local";
+import { appList } from "@/utils/appList";
 
 Vue.use(VueX);
 
 const defaultUserData = {
     isLogin: false, //是否登录账号
-    backBlur: 10, //背景毛玻璃效果
+    backBlur: 10, //背景毛玻璃效果,
+    appList: appList, //默认App列表
 };
 
 const defaultUserInfo = {
