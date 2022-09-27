@@ -1,5 +1,6 @@
 <template>
   <div class="app-background" :style="{ backgroundImage: `url('${backgroundUrl}')` }">
+		<meta name="viewport" content="viewport-fit=cover">
 		<div class="app-container" :style="{ backdropFilter: `blur(${$store.state.userData.backBlur}px)` }">
 			<!-- 导航栏 -->
 			<NavBar />
