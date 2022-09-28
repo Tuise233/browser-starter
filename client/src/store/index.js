@@ -2,6 +2,7 @@ import Vue from "vue";
 import VueX from "vuex";
 import local from "@/utils/local";
 import { appList } from "@/utils/appList";
+import api from "@/utils/api";
 
 Vue.use(VueX);
 

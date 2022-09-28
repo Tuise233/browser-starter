@@ -1,5 +1,5 @@
 <template>
-  <div class="app-background" :style="{ backgroundImage: `url('${backgroundUrl}')` }">
+  <div @contextmenu="disableMenu" class="app-background" :style="{ backgroundImage: `url('${backgroundUrl}')` }">
 		<meta name="viewport" content="viewport-fit=cover">
 		<div class="app-container" :style="{ backdropFilter: `blur(${$store.state.userData.backBlur}px)` }">
 			<!-- 导航栏 -->
@@ -59,6 +59,13 @@ export default {
 		],
 
 		backgroundUrl: ""
+	}
+  },
+
+  methods: {
+	disableMenu(){
+		window.event.returnValue = false;
+      	return false;
 	}
   },
 };

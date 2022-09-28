@@ -241,6 +241,7 @@
               v-if="appIconType == 0 && appIcon != ''"
               style="width: 40px; height: 40px"
               :src="appIcon"
+              @error="handleImgError"
             />
             <span
               v-if="appIconType == 1 && appIcon != ''"
@@ -252,7 +253,10 @@
             <span style="font-size: 15px; margin-bottom: 10px"
               >输入正确网址后会自动解析网站图标</span
             >
-            <el-color-picker v-model="appColor"></el-color-picker>
+            <div style="display: flex; height: 40px;">
+              <el-color-picker v-model="appColor" v-if="appBlur == false" style="margin-right: 10px;"></el-color-picker>
+              <el-checkbox v-model="appBlur" style="margin-top: auto; margin-bottom: 0;">是否毛玻璃化</el-checkbox>
+            </div>
           </div>
         </div>
         <el-input
@@ -279,7 +283,6 @@
 
 <script>
 import api from "@/utils/api";
-
 export default {
   created() {
     this.blurValue = this.$store.state.userData.backBlur;
@@ -300,6 +303,7 @@ export default {
       appIconType: 0,
       appUrl: "",
       appName: "",
+      appBlur: false
     };
   },
 
@@ -333,6 +337,7 @@ export default {
             this.$store.state.userData.isLogin = true;
             this.$store.state.isShowLogin = false;
             this.$store.state.userInfo.username = res.data.entity.username;
+            console.log(this.$store.state.userInfo.username);
             this.$store.commit("saveUserData");
             this.$store.commit("saveUserInfo");
             this.$message({
@@ -488,9 +493,13 @@ export default {
       if (this.isUrl(this.appUrl)) {
         this.appIcon = this.appUrl + "/favicon.ico";
       } else {
-        this.appIcon = this.appUrl.substr(7, 1);
-        this.appIconType = 1;
+        this.handleImgError();
       }
+    },
+
+    handleImgError(){
+      this.appIcon = this.appName[0];
+      this.appIconType = 1;
     },
 
     handleSaveNewApp() {
@@ -511,7 +520,7 @@ export default {
         name: this.appName,
         icon: this.appIcon,
         iconType: this.appIconType,
-        color: this.appColor,
+        color: this.appBlur == true ? '' : this.appColor,
       });
       this.$store.commit("formatList");
       this.$store.commit("saveUserData");

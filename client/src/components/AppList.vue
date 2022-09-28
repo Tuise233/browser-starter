@@ -4,10 +4,11 @@
         <el-carousel-item v-for="(page, pIndex) in $store.state.formatAppList" v-bind:key="pIndex">
             <div class="app-applist-container">
                 <div class="app-applist-container-item-row" v-for="(row, rIndex) in page" v-bind:key="rIndex">
-                    <div class="app-applist-container-item" v-for="(item, index) in row" v-bind:key="index" :style="item.color == '' ? 'rgba(155, 155, 155, 0.384)' : item.color">
-                        <div class="app-applist-container-item-img">
+                    <div class="app-applist-container-item" v-for="(item, index) in row" v-bind:key="index"
+                        @click="handleOpenApp(item.url)">
+                        <div class="app-applist-container-item-img" :style="{ backgroundColor: item.color == '' ? 'rgba(155, 155, 155, 0.384)' : item.color }">
                             <img v-if="item.iconType == 0 && item.icon != ''" :src="item.icon">
-                            <span v-if="item.iconType == 1 && item.icon != ''" style="font-weight: bold; font-size: 20px; color:white;"></span>
+                            <span v-if="item.iconType == 1 && item.icon != ''" style="font-weight: bold; font-size: 20px; color:white;">{{ item.name[0] }}</span>
                         </div>
                         <span>{{item.name}}</span>
                     </div>
@@ -31,7 +32,9 @@ export default {
     },
 
     methods: {
-
+        handleOpenApp(url){
+            window.open(url, "_self");
+        }
     },
 }
 </script>
@@ -82,7 +85,7 @@ export default {
 .app-applist-container-item-img{
     width: 50px;
     height: 50px;
-    background-color: rgba(155, 155, 155, 0.384);
+    /* background-color: rgba(155, 155, 155, 0.384); */
     /* background-color: rgba(255, 255, 255, 0.95); */
     display: flex;
     align-items: center;
