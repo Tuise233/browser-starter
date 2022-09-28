@@ -450,6 +450,8 @@ export default {
 
         this.$store.state.userData = JSON.parse(res.data.entity.userData);
         this.$store.commit("saveUserData");
+        this.$store.commit("formatList");
+        this.backBlur = this.$store.state.userData.backBlur;
       });
     },
 

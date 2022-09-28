@@ -61,7 +61,7 @@ export default {
                     }
 
                     case "fanyi":{
-                        url = "https://translate.google.cn/#view=home&op=translate&sl=en&tl=zh-CN&text=" + this.searchText;
+                        url = "https://translate.google.cn/#view=home&op=translate&sl=en&tl=zh-CN&text=" + searchText;
                         break;
                     }
 
