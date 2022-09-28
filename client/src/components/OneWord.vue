@@ -5,8 +5,8 @@
 </template>
 
 <script>
-import axios from "axios";
 import dom from "@/utils/dom";
+import api from "@/utils/api";
 
 export default {
   data() {
@@ -26,7 +26,7 @@ export default {
 
   methods: {
     getWord() {
-      axios.get("https://v1.hitokoto.cn/?c=d&c=i&encode=json").then((res) => {
+      api.getOneWord().then((res) => {
         this.text = ` 「 ${res.data.hitokoto} 」 `;
       });
     },

@@ -11,7 +11,8 @@
 </template>
 
 <script>
-import axios from "axios";
+import api from "@/utils/api";
+
 export default {
     data() {
         return {
@@ -24,7 +25,7 @@ export default {
 
     created() {
         //天气查询
-        axios.get("https://restapi.amap.com/v3/weather/weatherInfo?key=ca4a7be3e42dba27788bd91b69de1307&city=350123").then((res) => {
+        api.getWeatherWord().then((res) => {
             this.weather.temp = res.data.lives[0].temperature;
             this.weather.state = res.data.lives[0].weather;
         });
