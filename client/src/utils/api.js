@@ -5,7 +5,7 @@ const apiUrl = "http://web.tuise233.cn:8081/";
 const api = {
     //获取天气数据
     getWeatherWord(){
-        return axios.get("https://restapi.amap.com/v3/weather/weatherInfo?key=ca4a7be3e42dba27788bd91b69de1307&city=350123");
+        return axios.get("https://devapi.qweather.com/v7/weather/now?location=101020100&key=86deb9fac0674e0e80c7cfe997b7a12f");
     },
 
     //获取一言

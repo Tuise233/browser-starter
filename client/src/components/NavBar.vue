@@ -26,8 +26,8 @@ export default {
     created() {
         //天气查询
         api.getWeatherWord().then((res) => {
-            this.weather.temp = res.data.lives[0].temperature;
-            this.weather.state = res.data.lives[0].weather;
+            this.weather.temp = res.data.now.temp;
+            this.weather.state = res.data.now.text;
         });
     },
 
