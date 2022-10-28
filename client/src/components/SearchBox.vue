@@ -61,7 +61,12 @@ export default {
                     }
 
                     case "fanyi":{
-                        url = "https://translate.google.cn/#view=home&op=translate&sl=en&tl=zh-CN&text=" + searchText;
+                        url = "https://fanyi.baidu.com//?channel=pcPinzhuan#en/zh/" + searchText;
+                        break;
+                    }
+
+                    case "taobao":{
+                        url = "https://s.taobao.com/search?q=" + searchText;
                         break;
                     }
 
@@ -92,6 +97,8 @@ export default {
                     this.iconPath = require("../assets/icon/github.png");
                 } else if(this.searchText == "google "){
                     this.iconPath = require("../assets/icon/google.png");
+                } else if(this.searchText == "taobao "){
+                    this.iconPath = require('../assets/icon/taobao.png');
                 }
             } else if(this.searchText.length == 9){
                 if(this.searchText == "bilibili "){
